@@ -4,6 +4,7 @@ import { hash } from 'bcrypt';
 const prisma = new PrismaClient()
 
 async function run() {
+  await prisma.rating.deleteMany();
   await prisma.user.deleteMany();
   
   const firstUserId = '0730ffac-d039-4194-9571-01aa2aa0efbd';
@@ -20,7 +21,6 @@ async function run() {
         id: firstUserId,
         name: 'Gabriel Lima Barros',
         email: 'lima@gmail.com',
-        username: 'gabriellimab',
         password: firstPassword,
       }
     }),
@@ -28,10 +28,17 @@ async function run() {
     prisma.user.create({
       data: {
         id: secondUserId,
-        name: 'Gabriel Teixeira Carvalho',
-        email: 'teixeira@gmail.com',
-        username: 'gteixeirac',
+        name: 'Isabella Vignoli Gonçalves',
+        email: 'isabella@gmail.com',
         password: secondPassword,
+        ratings: {
+          create: {
+            rating: 10,
+            review: 'Muito bom',
+            movieId: 313369,
+            watched: true,
+          }
+        }
       }
     })
   ]);

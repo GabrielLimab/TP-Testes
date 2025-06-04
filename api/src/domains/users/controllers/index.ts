@@ -65,18 +65,6 @@ verifyJWT,
   },
 );
 
-router.get('/username/:username',
-verifyJWT,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try{
-      const user = await UserService.getByUsername(req.params.username);
-      res.status(statusCodes.SUCCESS).json(user);
-    } catch (error) {
-      next(error)
-    }
-  },
-);
-
 router.put('/:id',
 verifyJWT,
   async (req: Request, res:Response, next: NextFunction) => {
