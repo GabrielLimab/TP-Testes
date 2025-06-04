@@ -1,5 +1,5 @@
 # TP-Testes
 
 ## Participantes
-Gabriel Lima Barros
-Isabella Vignoli Gonçalves
+* Gabriel Lima Barros
+* Isabella Vignoli Gonçalves
