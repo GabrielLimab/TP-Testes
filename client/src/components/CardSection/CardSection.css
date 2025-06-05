@@ -1,0 +1,83 @@
+.card-section-container {
+  color: #c3c3c3;
+}
+
+.card-section-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+  color: #c3c3c3;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.dot-icon {
+  padding-right: 0.5em;
+}
+
+.section-title::after {
+  content: "➔";
+  margin-left: 0.5em;
+}
+
+.section-subtitle {
+  font-size: 1em;
+  margin-bottom: 1.5em;
+  color: #797979;
+}
+
+.carousel-controls {
+  display: flex;
+  gap: 0.5em;
+}
+
+.prev,
+.next {
+  border: none;
+  color: #c3c3c3;
+  background-color: #a3a3a326;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  display: flex;
+}
+
+.prev:disabled,
+.next:disabled {
+  background-color: #a3a3a324;
+  color: #c3c3c360;
+}
+
+.prev:hover,
+.next:hover {
+  color: white;
+  background-color: #a3a3a36f;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.prev:disabled:hover,
+.next:disabled:hover {
+  background-color: #a3a3a324;
+  color: #c3c3c360;
+  cursor: default;
+}
+
+.cards {
+  display: flex;
+  gap: 1em;
+  overflow-x: hidden;
+  flex-direction: row;
+  padding-bottom: 1em;
+  
+}
