@@ -1,0 +1,36 @@
+.text-input-container input {
+  color: #424242;
+  font-family: "Zen Kaku Gothic Antique", sans-serif;
+  font-size: 1em;
+  padding: 1em 0.75em 0.75em 0.75em;
+  border: 1px solid transparent;
+  outline: none;
+  width: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  border-radius: 1em;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 0s 600000s, color 0s 600000s !important;
+}
+
+.text-input-container .legend {
+  color: #424242;
+  display: block;
+  position: absolute;
+  top: -0.75em;
+  left: 1em;
+  padding: 0 0.75em;
+  background-color: white;
+  z-index: 10;
+}
+
+.text-input-container {
+  border: 1px solid #bdbdbd;
+  border-radius: 1em;
+  padding: 0;
+  margin-top: 1em;
+  position: relative;
+}
