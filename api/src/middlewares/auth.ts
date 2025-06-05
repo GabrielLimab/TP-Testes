@@ -5,6 +5,7 @@ import { statusCodes } from '../../utils/constants/status-codes';
 import { Request, Response, NextFunction } from 'express';
 import { getEnv } from '../../utils/functions/get-env';
 import prisma from "../../libs/prisma"
+import { UserRepository } from '../domains/users/repositories/UserRepository';
 
 function generateJWT(userId: string , res: Response) {
   const body = {
@@ -31,11 +32,7 @@ function cookieExtractor(req: Request) {
 
 export async function loginMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await prisma.user.findFirst({
-      where: {
-        email: req.body.email,
-      },
-    });
+    const user = await UserRepository.getUserByEmail(req.body.email);
 
     if (!user) {
       throw new PermissionError('Invalid e-mail and/or password.');
