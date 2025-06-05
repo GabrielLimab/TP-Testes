@@ -6,8 +6,8 @@
 
 ## Introdução ao Sistema 
 
-### Objetivo
-O objetivo do sistema é criar um ambiente para salvar a avaliar seus filmes favoritos
+### Objetivo e Funcionamento
+O sistema "Primeira Fila" tem como principal objetivo oferecer um ambiente interativo onde os usuários possam salvar, avaliar e explorar seus filmes favoritos. Ao permitir que os usuários mantenham um histórico pessoal de filmes que já assistiram, com notas e comentários, é criado uma espécie de diário de cinema digital. A plataforma tem recursos de busca e filtro para que os usuários encontrem filmes específicos e acessem informações detalhadas como sinopse, gênero, elenco e média de avaliação dos usuários. Os usuários também podem visitar o perfil de outras pessoas e visualizar suas listas de filmes avaliados. Além disso, o sistema fornece os filmes com melhores avaliações gerais.
 
 ### Principais Features
 * Página de login
