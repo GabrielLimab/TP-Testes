@@ -1,0 +1,77 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em 0;
+}
+
+.welcome {
+  color: black;
+  font-size: 1em;
+  margin: 0;
+}
+
+.login-message {
+  color: black;
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875em 0;
+}
+
+.login-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #424242;
+  gap: 0 2em;
+}
+
+.login-controls a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.remember {
+  display: flex;
+  align-items: flex-end;
+  margin: 0.5em 0;
+}
+
+.remember input {
+  font-size: 0.9em;
+  width: 1.5em;
+  height: 1.5em;
+  margin: 0 0.5em 0 0;
+  accent-color: #212121;
+}
+
+.text-divider {
+  display: flex;
+  align-items: center;
+  color: #212121;
+}
+
+.text-divider::before,
+.text-divider::after {
+  content: "";
+  height: 1px;
+  background-color: silver;
+  flex-grow: 1;
+  margin: 0 1em;
+}
+
+.go-to-signup {
+  color: #212121;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.go-to-signup a {
+  color: #212121;
+  text-decoration: none;
+}

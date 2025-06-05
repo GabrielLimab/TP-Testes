@@ -1,0 +1,40 @@
+.mainContainer {
+  background-color: #121212;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  color: white;
+}
+
+.background {
+  background: rgba(157, 139, 248, 0.498);
+  filter: blur(18em);
+  border-radius: 52px;
+  position: absolute;
+  width: 100%;
+  height: 20%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  pointer-events: none;
+  justify-content: center;
+}
+
+.foreground {
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+  box-sizing: border-box;
+}
+
+.card-sections {
+  width: 100%;
+}
