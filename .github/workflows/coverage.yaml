@@ -1,33 +1,43 @@
-tests-coverage:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+name: tests-coverage
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: "20"
-        cache: "npm"
-        cache-dependency-path: "./api/package-lock.json"
+on:
+  push:
+    branches: [main]        # or your default branch
+  pull_request:
+    branches: [main]
 
-    - name: Install back-end dependencies and set up DB
-      run: |
-        cd api
-        npm install
-        npx prisma db push
-        npx prisma db seed
+jobs:
+  tests-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Run unit tests with coverage
-      run: |
-        cd api
-        npm run coverage  # Must generate ./coverage/lcov.info
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: "./api/package-lock.json"
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        files: ./api/coverage/lcov.info
-        flags: backend
-        name: unit-tests-coverage
-        fail_ci_if_error: true
-        verbose: true
+      - name: Install back-end dependencies and set up DB
+        run: |
+          cd api
+          npm install
+          npx prisma db push
+          npx prisma db seed
+
+      - name: Run unit tests with coverage
+        run: |
+          cd api
+          npm run coverage  # should generate ./coverage/lcov.info
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}  # Only for private repos
+          files: ./api/coverage/lcov.info
+          flags: backend
+          name: unit-tests-coverage
+          fail_ci_if_error: true
+          verbose: true
