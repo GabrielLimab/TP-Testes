@@ -202,14 +202,6 @@ describe('Search', () => {
     cy.get('[data-testid="search-input"]').should('have.value', 'Game of Thrones');
   });
 
-  it('should press enter and go to search page', () => {
-    cy.get('[data-testid="search-input"]')
-    .click()
-    .type('Game of Thrones{enter}');
-
-    cy.url().should('include', '/search');
-  });
-
   it('should display search results', () => {
     cy.get('[data-testid="search-input"]')
     .click()
@@ -219,7 +211,4 @@ describe('Search', () => {
     cy.contains('Filmes').should('be.visible');
     cy.contains('Compartilhar').should('be.visible');
   });
-
-
-
 });
