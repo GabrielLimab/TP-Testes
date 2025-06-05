@@ -4,6 +4,8 @@ import { verifyJWT } from '../../../middlewares/auth';
 import { statusCodes } from '../../../../utils/constants/status-codes';
 export const router = Router();
 
+// Teste coverage
+
 router.get('/for-you', 
   verifyJWT, 
   async(req: Request, res: Response, next:NextFunction) => {  
