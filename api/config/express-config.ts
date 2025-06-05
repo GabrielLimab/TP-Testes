@@ -23,7 +23,11 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 import { router as usersRouter } from '../src/domains/users/controllers/index';
+import { router as moviesRouter } from '../src/domains/movies/controllers/index';
+import { router as ratingsRouter } from '../src/domains/ratings/controllers/index';
 
 app.use('/api/users', usersRouter);
+app.use('/api/movies', moviesRouter);
+app.use('/api/ratings', ratingsRouter);
 
 app.use(errorHandler);
