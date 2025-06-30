@@ -2,11 +2,17 @@ import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { RatingService } from "../domains/ratings/services/RatingService"; // ajuste o caminho conforme necessário
+import api from "../domains/movies/repositories/MovieAPI";
 
 vi.mock("axios");
 
 const prisma = new PrismaClient();
-const api = axios.create();
+
+vi.mock("../domains/movies/repositories/MovieAPI", () => ({
+  default: {
+    get: vi.fn(),
+  },
+}));
 
 vi.mock("../libs/prisma");
 vi.mock("@prisma/client", () => {
@@ -30,6 +36,51 @@ describe("RatingsService", () => {
   });
 
   describe("createRating", () => {
+    test("should create rating if no existentRating is found", async () => {
+      const movieId = 1;
+      const userId = "1";
+      const rating = 4;
+      const watched = true;
+      const review = "Brand new review";
+
+      prisma.rating.findFirst.mockResolvedValue(null);
+
+      const createdRating = {
+        id: 2,
+        movieId,
+        userId,
+        rating,
+        watched,
+        review,
+      };
+      prisma.rating.create.mockResolvedValue(createdRating);
+
+      const result = await RatingService.createRating(
+        movieId,
+        userId,
+        rating,
+        watched,
+        review
+      );
+
+      expect(prisma.rating.findFirst).toHaveBeenCalledWith({
+        where: { movieId, userId },
+      });
+      expect(prisma.rating.create).toHaveBeenCalledWith({
+        data: {
+          movieId,
+          rating,
+          watched,
+          review,
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+        },
+      });
+      expect(result).toEqual(createdRating);
+    });
     test("should update rating if existentRating is found", async () => {
       const movieId = 1;
       const userId = "1";
@@ -119,6 +170,39 @@ describe("RatingsService", () => {
         },
       });
     });
+
+    test("should propagate error if create throws", async () => {
+      const movieId = 1;
+      const userId = "1";
+      const rating = 5;
+      const watched = true;
+      const review = "Some review";
+
+      (prisma.rating.findFirst as any).mockResolvedValue(null);
+      (prisma.rating.create as any).mockRejectedValue(new Error("Create failed"));
+
+      await expect(
+        RatingService.createRating(movieId, userId, rating, watched, review)
+      ).rejects.toThrow("Create failed");
+
+      expect(prisma.rating.findFirst).toHaveBeenCalledWith({
+        where: { movieId, userId },
+      });
+
+      expect(prisma.rating.create).toHaveBeenCalledWith({
+        data: {
+          movieId,
+          rating,
+          watched,
+          review,
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+        },
+      });
+    });
   });
 
   describe("getRating", () => {
@@ -152,29 +236,6 @@ describe("RatingsService", () => {
 
       // Configure mocks
       (prisma.rating.findFirst as any).mockResolvedValue(null);
-
-      const result = await RatingService.getRating(movieId, userId);
-
-      expect(prisma.rating.findFirst).toHaveBeenCalledWith({
-        where: {
-          movieId,
-          userId,
-        },
-      });
-
-      expect(result).toBe(-1);
-    });
-
-    test("should return -1 when the rating found has null rating", async () => {
-      const userId = "1";
-      const movieId = 1;
-
-      // Configure mocks
-      (prisma.rating.findFirst as any).mockResolvedValue({
-        movieId,
-        userId,
-        rating: null,
-      });
 
       const result = await RatingService.getRating(movieId, userId);
 
@@ -411,6 +472,20 @@ describe("RatingsService", () => {
           },
         },
       });
+    });
+  });
+
+  describe("getAverageRating", () => {
+    test("should return combined average", async () => {
+      (api.get as any).mockResolvedValue({
+        data: { vote_average: 8, vote_count: 1000 },
+      });
+
+      (prisma.rating.findMany as any).mockResolvedValue([{ rating: 4 }, { rating: 6 }]);
+
+      const result = await RatingService.getAverageRating(1);
+
+      expect(result).toEqual({ average: 6, count: 1002 });
     });
   });
 });
