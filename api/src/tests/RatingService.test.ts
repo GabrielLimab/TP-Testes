@@ -248,6 +248,7 @@ describe("RatingsService", () => {
 
       expect(result).toBe(-1);
     });
+  });
 
     test("should return -1 when the rating found has null rating", async () => {
       const userId = "1";
@@ -271,7 +272,6 @@ describe("RatingsService", () => {
 
       expect(result).toBe(-1);
     });
-  });
 
   describe("getUserTopRatedMovie", () => {
     test("should return the top-rated movie for the user", async () => {
@@ -510,7 +510,7 @@ describe("RatingsService", () => {
 
       expect(result).toEqual({ average: 6, count: 1002 });
     });
-
+  });
     test("should return API average and count when no local ratings exist", async () => {
       const movieId = 1;
 
@@ -540,5 +540,4 @@ describe("RatingsService", () => {
         count: 800,
       });
     });
-  });
 });
