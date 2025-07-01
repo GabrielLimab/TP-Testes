@@ -28,8 +28,8 @@ async function run() {
     prisma.user.create({
       data: {
         id: secondUserId,
-        name: 'Gabriel Teixeira Carvalho',
-        email: 'teixeira@gmail.com',
+        name: 'Isabella Vignoli',
+        email: 'vignoli@gmail.com',
         password: secondPassword,
         ratings: {
           create: {
