@@ -248,6 +248,29 @@ describe("RatingsService", () => {
 
       expect(result).toBe(-1);
     });
+
+    test("should return -1 when the rating found has null rating", async () => {
+      const userId = "1";
+      const movieId = 1;
+
+      // Configure mocks
+      (prisma.rating.findFirst as any).mockResolvedValue({
+        movieId,
+        userId,
+        rating: null,
+      });
+
+      const result = await RatingService.getRating(movieId, userId);
+
+      expect(prisma.rating.findFirst).toHaveBeenCalledWith({
+        where: {
+          movieId,
+          userId,
+        },
+      });
+
+      expect(result).toBe(-1);
+    });
   });
 
   describe("getUserTopRatedMovie", () => {
@@ -486,6 +509,36 @@ describe("RatingsService", () => {
       const result = await RatingService.getAverageRating(1);
 
       expect(result).toEqual({ average: 6, count: 1002 });
+    });
+
+    test("should return API average and count when no local ratings exist", async () => {
+      const movieId = 1;
+
+      // Mock da API (TMDB)
+      (api.get as any).mockResolvedValue({
+        data: {
+          vote_average: 7.2,
+          vote_count: 800,
+        },
+      });
+
+      // Mock do Prisma - nenhum rating local
+      (prisma.rating.findMany as any).mockResolvedValue([]);
+
+      const result = await RatingService.getAverageRating(movieId);
+
+      expect(api.get).toHaveBeenCalledWith(/movie/${movieId});
+      expect(prisma.rating.findMany).toHaveBeenCalledWith({
+        where: {
+          movieId: movieId,
+          rating: { not: null },
+        },
+      });
+
+      expect(result).toEqual({
+        average: 7.2,
+        count: 800,
+      });
     });
   });
 });
