@@ -1,10 +1,9 @@
-const { defineConfig } = require('cypress')
+import { defineConfig } from "cypress";
 
-module.exports = defineConfig({
+export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      require('@cypress/code-coverage/task')(on, config)
-      return config
+      // implement node event listeners here
     },
   },
-})
+});
