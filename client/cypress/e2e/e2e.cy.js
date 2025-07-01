@@ -195,6 +195,7 @@ describe('Search', () => {
   });
 
   it('should click on searchInput and write Game of Thrones', () => {
+    cy.wait(1000);
     cy.get('[data-testid="search-input"]')
     .click()
     .type('Game of Thrones');
